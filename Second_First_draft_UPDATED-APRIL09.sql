@@ -48,7 +48,7 @@ P_Phone VARCHAR(20) UNIQUE,
 P_Email VARCHAR (80) UNIQUE,
 P_State  VARCHAR(50),
 P_City  VARCHAR(50),
-P_Postal_Code  VARCHAR(10),
+P_Postal_Code VARCHAR(10),
 INS_ID INT,
 CONSTRAINT INS_ID_PATIENT_FK FOREIGN KEY (INS_ID) REFERENCES INSURANCE_COMPANY (INS_ID) ON DELETE SET NULL);
 
@@ -77,6 +77,23 @@ D_LNAME VARCHAR(30),
 D_PHONE VARCHAR(12),
 D_EMAIL VARCHAR(30));
 
+INSERT INTO DENTIST
+VALUES('101', 'Ariana', 'Grande', '514-777-7777', 'aGrande@gmail.com');
+INSERT INTO DENTIST
+VALUES('102', 'Anushka', 'Winther', '505-992-0021', 'AnushkaW@gmail.com');
+INSERT INTO DENTIST
+VALUES('103', 'Ahmed', 'Saad', '514-572-6482', 'aSaad@icloud.com');
+INSERT INTO DENTIST
+VALUES('104', 'Wali', 'Waltz', '456-826-9910', 'WW@hotmail.com');
+INSERT INTO DENTIST
+VALUES('105', 'Nancy', 'Ajram', '514-637-2232', 'NancyAjram@yahoo.com');
+INSERT INTO DENTIST
+VALUES('106', 'Yunjin', 'Huh', '677-017-6281', 'yHuh@gmail.com');
+INSERT INTO DENTIST
+VALUES('107', 'Cristiano', 'Ronaldo', '603-548-2290', 'CR7@gmail.com');
+INSERT INTO DENTIST
+VALUES('108', 'Pan', 'Mercado', '789-547-6621', 'PMercado@hotmail.com');
+
 --Appointment
 CREATE TABLE APPOINTMENT
 (AP_ID CHAR(5) PRIMARY KEY,
@@ -93,12 +110,38 @@ ALTER COLUMN STATUS VARCHAR(30);
 ALTER TABLE APPOINTMENT
 ADD CONSTRAINT AP_STATUS_CK CHECK(STATUS IN ('SCHEDULED', 'UNSCHEDULED'));
 
+INSERT INTO APPOINTMENT
+VALUES ('12345', '101', '1005', '2026-04-23', '3:00', 'Cleaning', 'SCHEDULED');
+INSERT INTO APPOINTMENT
+VALUES ('23456', '103', '1006', '2026-06-16', '5:30', 'Root Canal', 'UNSCHEDULED');
+INSERT INTO APPOINTMENT
+VALUES ('34567', '107', '1002', '2026-05-03', '6:45', 'Fillings', 'SCHEDULED');
+INSERT INTO APPOINTMENT
+VALUES ('45678', '104', '1007', '2026-04-10', '9:00', 'Fillings', 'UNSCHEDULED');
+INSERT INTO APPOINTMENT
+VALUES ('56789', '102', '1003', '2026-07-15', '3:30', 'Cleaning', 'SCHEDULED');
+INSERT INTO APPOINTMENT
+VALUES ('67890', '101', '1004', '2026-04-20', '4:00', 'Veneer installment', 'SCHEDULED');
+
+
+
 --Treatment
 CREATE TABLE TREATMENT
 (T_ID CHAR(5) PRIMARY KEY,
 T_NAME VARCHAR(30),
 T_DESCRIPTION VARCHAR(125),
 T_COST MONEY);
+
+INSERT INTO TREATMENT
+VALUES('00001', 'Composite Fillings', 'Restorative procedure. Add composite filling to 2 teeth.', 852.00);
+INSERT INTO TREATMENT
+VALUES('00011', 'Cleaning', 'Routinely cleaning.', 155.00);
+INSERT INTO TREATMENT
+VALUES('00111', 'Amalgam Fillings', 'Restorative procedure. Add amalgam filling to 1 tooth.', 170.00);
+INSERT INTO TREATMENT
+VALUES('01111', 'Veneers', 'Add veneers to 5 teeth.', 7000.00);
+INSERT INTO TREATMENT
+VALUES('11111', 'Root Canal', 'Root canal treatment. 1 tooth.', 1200.00);
 
 --Visit
 CREATE TABLE VISIT
@@ -107,6 +150,19 @@ V_DATE DATE,
 DIAGNOSIS VARCHAR(250),
 T_ID CHAR(5) FOREIGN KEY REFERENCES TREATMENT,
 AP_ID CHAR(5) FOREIGN KEY REFERENCES APPOINTMENT);
+
+INSERT INTO VISIT
+VALUES ('111', '2026-04-23', 'A lot of plaque. Needs to floss more.', '00011', '12345');
+INSERT INTO VISIT
+VALUES ('112', '2026-06-16', 'Do not apply pressure on treated area. In case of pain, take 2 ibuprofen pills.', '11111', '23456');
+INSERT INTO VISIT
+VALUES ('113','2026-05-03', 'All cavities were filled.', '00001', '34567');
+INSERT INTO VISIT
+VALUES ('114','2026-04-10', 'All cavities were filled.', '00111', '45678');
+INSERT INTO VISIT
+VALUES ('115', '2026-07-15', 'Better than before. Needs whitening.', '00011', '56789');
+INSERT INTO VISIT
+VALUES ('116', '2026-04-20', 'All veneers installed. Brush teeth well and do not apply pressure on area.', '01111', '67890');
 
 --Bill
 CREATE TABLE BILL(
